@@ -1,17 +1,23 @@
 import streamlit as st
+import subprocess
+import sys
 import fitz  # PyMuPDF
 import spacy
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-# ✅ Load spaCy model with fallback
+# ✅ Step 1: Try loading spaCy model
 try:
     nlp = spacy.load("en_core_web_sm")
 except:
-    import en_core_web_sm
-    nlp = en_core_web_sm.load()
-
-
+    # ✅ Step 2: If not found, download and load
+    st.warning("Downloading spaCy model... Please wait.")
+    subprocess.run([sys.executable, "-m", "spacy", "download", "en_core_web_sm"])
+    try:
+        nlp = spacy.load("en_core_web_sm")
+    except:
+        st.error("❌ Failed to download/load spaCy model.")
+        st.stop()
 
 # Safe PDF extraction
 def extract_text_from_pdf(uploaded_file):
