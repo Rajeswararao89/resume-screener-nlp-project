@@ -1,6 +1,8 @@
 import streamlit as st
 import fitz  # PyMuPDF
 import spacy
+import os
+os.system("python -m spacy download en_core_web_sm")
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
