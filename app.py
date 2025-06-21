@@ -1,20 +1,19 @@
 import streamlit as st
+import os
 import fitz  # PyMuPDF
 import spacy
-import os
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
+# ✅ Download the model first
 os.system("python -m spacy download en_core_web_sm")
-nlp = spacy.load("en_core_web_sm")
 
-# Load spaCy model
+# ✅ Now load it
 try:
     nlp = spacy.load("en_core_web_sm")
-except Exception as e:
-    st.error("❌ Failed to load spaCy model. Please refresh the app.")
+except:
+    st.error("❌ Failed to load spaCy model after downloading.")
     st.stop()
-
 
 # Safe PDF extraction
 def extract_text_from_pdf(uploaded_file):
