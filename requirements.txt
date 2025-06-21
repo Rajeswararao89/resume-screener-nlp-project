@@ -2,3 +2,4 @@ streamlit
 spacy
 scikit-learn
 PyMuPDF
+en-core-web-sm
